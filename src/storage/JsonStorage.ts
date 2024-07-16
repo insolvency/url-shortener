@@ -4,7 +4,7 @@ import type { IStorage, ShortenedUrl } from "./IStorage";
 import ShortUniqueId from "short-unique-id";
 
 export class JsonStorage implements IStorage {
-	uid: ShortUniqueId = new ShortUniqueId({ length: 10 });
+	uid: ShortUniqueId = new ShortUniqueId({ length: env.SHORTEN_LENGTH });
 	db: JsonDB;
 
 	constructor() {

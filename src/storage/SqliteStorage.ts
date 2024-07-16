@@ -4,7 +4,7 @@ import ShortUniqueId from "short-unique-id";
 import { Database } from "sqlite3";
 
 export class SqliteStorage implements IStorage {
-	uid: ShortUniqueId = new ShortUniqueId({ length: 10 });
+	uid: ShortUniqueId = new ShortUniqueId({ length: env.SHORTEN_LENGTH });
 	db: Database;
 
 	constructor() {

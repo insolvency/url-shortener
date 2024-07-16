@@ -1,8 +1,9 @@
 import ShortUniqueId from "short-unique-id";
 import type { IStorage, ShortenedUrl } from "./IStorage";
+import { env } from "../env";
 
 export class MemoryStorage implements IStorage {
-	uid: ShortUniqueId = new ShortUniqueId({ length: 10 });
+	uid: ShortUniqueId = new ShortUniqueId({ length: env.SHORTEN_LENGTH });
 	shortenedUrls: ShortenedUrl[] = [];
 
 	public async addUrl(url: string): Promise<string> {
