@@ -1,11 +1,5 @@
 import ShortUniqueId from "short-unique-id";
-import type { IStorage } from "./IStorage";
-
-interface ShortenedUrl {
-	url: string;
-	shortenedTo: string;
-	views: number;
-}
+import type { IStorage, ShortenedUrl } from "./IStorage";
 
 export class MemoryStorage implements IStorage {
 	uid: ShortUniqueId = new ShortUniqueId({ length: 10 });
@@ -22,20 +16,16 @@ export class MemoryStorage implements IStorage {
 		return shortenedTo;
 	}
 
-	public getUrl(shortenedTo: string): string | undefined {
+	public getUrl(shortenedTo: string): ShortenedUrl | undefined {
 		const shortenedUrl = this.shortenedUrls.find(
 			(shortenedUrl) => shortenedUrl.shortenedTo === shortenedTo,
 		);
 
-		return shortenedUrl?.url;
+		return shortenedUrl;
 	}
 
-	public getUrlViews(shortenedTo: string): number | undefined {
-		const shortenedUrl = this.shortenedUrls.find(
-			(shortenedUrl) => shortenedUrl.shortenedTo === shortenedTo,
-		);
-
-		return shortenedUrl?.views;
+	public getAllUrls(): ShortenedUrl[] {
+		return this.shortenedUrls;
 	}
 
 	public addView(shortenedTo: string) {
