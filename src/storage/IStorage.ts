@@ -5,8 +5,8 @@ export interface ShortenedUrl {
 }
 
 export interface IStorage {
-	addUrl: (url: string) => string;
-	getUrl: (shortenedUrl: string) => ShortenedUrl | undefined;
-	getAllUrls: () => ShortenedUrl[];
-	addView: (shortenedUrl: string) => void;
+	addUrl: (url: string) => Promise<string>;
+	getUrl: (shortenedUrl: string) => Promise<ShortenedUrl | undefined>;
+	getAllUrls: () => Promise<ShortenedUrl[]>;
+	addView: (shortenedUrl: string) => Promise<void>;
 }

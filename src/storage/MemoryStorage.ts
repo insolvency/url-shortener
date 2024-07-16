@@ -3,9 +3,9 @@ import type { IStorage, ShortenedUrl } from "./IStorage";
 
 export class MemoryStorage implements IStorage {
 	uid: ShortUniqueId = new ShortUniqueId({ length: 10 });
-	public shortenedUrls: ShortenedUrl[] = [];
+	shortenedUrls: ShortenedUrl[] = [];
 
-	public addUrl(url: string): string {
+	public async addUrl(url: string): Promise<string> {
 		const shortenedTo = this.uid.rnd();
 		this.shortenedUrls.push({
 			url,
@@ -16,7 +16,7 @@ export class MemoryStorage implements IStorage {
 		return shortenedTo;
 	}
 
-	public getUrl(shortenedTo: string): ShortenedUrl | undefined {
+	public async getUrl(shortenedTo: string): Promise<ShortenedUrl | undefined> {
 		const shortenedUrl = this.shortenedUrls.find(
 			(shortenedUrl) => shortenedUrl.shortenedTo === shortenedTo,
 		);
@@ -24,11 +24,11 @@ export class MemoryStorage implements IStorage {
 		return shortenedUrl;
 	}
 
-	public getAllUrls(): ShortenedUrl[] {
+	public async getAllUrls(): Promise<ShortenedUrl[]> {
 		return this.shortenedUrls;
 	}
 
-	public addView(shortenedTo: string) {
+	public async addView(shortenedTo: string) {
 		this.shortenedUrls = this.shortenedUrls.map((su) =>
 			su.shortenedTo === shortenedTo ? { ...su, views: su.views + 1 } : su,
 		);
