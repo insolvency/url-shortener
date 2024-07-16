@@ -6,12 +6,15 @@ const envSchema = z
 		PORT: z.coerce.number().min(1000).max(25565),
 		BASE_URL: z.string().url().endsWith("/"),
 
-		DATASOURCE_PROVIDER: z.enum(["memory", "sqlite"]),
+		DATASOURCE_PROVIDER: z.enum(["memory", "sqlite", "json"]),
 		DATASOURCE_PATH: z.string().optional(),
 	})
 	.superRefine(
 		({ DATASOURCE_PROVIDER, DATASOURCE_PATH }, refinementContext) => {
-			if (DATASOURCE_PROVIDER === "sqlite" && DATASOURCE_PATH === undefined) {
+			if (
+				DATASOURCE_PROVIDER in ["sqlite", "json"] &&
+				DATASOURCE_PATH === undefined
+			) {
 				return refinementContext.addIssue({
 					code: z.ZodIssueCode.custom,
 					message:

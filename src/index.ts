@@ -6,12 +6,15 @@ import { validateRequest } from "./middleware/validateRequest";
 import { getShortenedUrlValidator } from "./middleware/validators/getShortenedUrlValidator";
 import { shortenUrlValidator } from "./middleware/validators/shortenUrlValidator";
 import { SqliteStorage } from "./storage/SqliteStorage";
+import { JsonStorage } from "./storage/JsonStorage";
 
 const app = express();
 const urlStorage: IStorage =
 	env.DATASOURCE_PROVIDER === "sqlite"
 		? new SqliteStorage()
-		: new MemoryStorage();
+		: env.DATASOURCE_PROVIDER === "json"
+			? new JsonStorage()
+			: new MemoryStorage();
 
 app.use(express.json({ limit: "5MB" }));
 
