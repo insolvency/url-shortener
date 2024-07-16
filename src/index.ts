@@ -7,6 +7,7 @@ import { getShortenedUrlValidator } from "./middleware/validators/getShortenedUr
 import { shortenUrlValidator } from "./middleware/validators/shortenUrlValidator";
 import { SqliteStorage } from "./storage/SqliteStorage";
 import { JsonStorage } from "./storage/JsonStorage";
+import { secretKeyValidation } from "./middleware/secretKeyValidation";
 
 const app = express();
 const urlStorage: IStorage =
@@ -20,7 +21,7 @@ app.use(express.json({ limit: "5MB" }));
 
 app.post(
 	"/shorten",
-	validateRequest(shortenUrlValidator),
+	[validateRequest(shortenUrlValidator), secretKeyValidation(env.SECRET)],
 	(
 		req: Request<
 			Record<string, unknown>,

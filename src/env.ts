@@ -6,6 +6,7 @@ const envSchema = z
 		PORT: z.coerce.number().min(1000).max(25565),
 		BASE_URL: z.string().url().endsWith("/"),
 		SHORTEN_LENGTH: z.coerce.number().min(5).max(32),
+		SECRET: z.string(),
 
 		DATASOURCE_PROVIDER: z.enum(["memory", "sqlite", "json"]),
 		DATASOURCE_PATH: z.string().optional(),
