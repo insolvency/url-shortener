@@ -1,0 +1,13 @@
+services:
+  url-shortener:
+    environment:
+      - PORT=3000
+      - BASE_URL=http://localhost:3000/
+      - SHORTEN_LENGTH=10
+      - SECRET=secret
+      - DATASOURCE_PROVIDER=memory
+    build:
+      context: .
+      target: final
+    ports:
+      - 3000:3000
